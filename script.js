@@ -18,7 +18,7 @@ function generateReport() {
     }
 
     var todayCount = logsArray.filter(log => log.includes('wsadził') && !log.includes('chciał wsadzić')).length;
-    var todayKey = getDateKey(); 
+    var todayKey = getDateKey();
     var monthlyCount = parseInt(localStorage.getItem(getMonthKey())) || 0;
 
     var previousTodayCount = parseInt(localStorage.getItem(todayKey)) || 0;
@@ -29,13 +29,25 @@ function generateReport() {
 
     result += '\n\nWsady dzisiaj: ' + (previousTodayCount + todayCount) + '\nWsady w tym miesiącu: ' + (monthlyCount + todayCount);
 
-   
     resultContainer.innerText = result;
 
     sendLogsToServer(logsArray);
 
-  
     fetchReportFromServer();
+
+    document.getElementById('logInput').value = '';
+}
+
+function copyReport() {
+    var resultContainer = document.getElementById('result');
+
+    var textArea = document.createElement('textarea');
+    textArea.value = resultContainer.innerText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+
 }
 
 function getDateKey() {
@@ -49,9 +61,7 @@ function getMonthKey() {
 }
 
 function sendLogsToServer(logsArray) {
-
 }
 
 function fetchReportFromServer() {
-
 }
